@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { motion } from "motion/react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function TerminalPage() {
   const [output, setOutput] = useState<string[]>([])
@@ -133,9 +133,38 @@ export default function TerminalPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-pink-400 italic text-base sm:text-lg"
+                    className="text-pink-400 italic text-base sm:text-lg inline-block"
                   >
-                    Because {firstName}, you are my world ❤️
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        color: ["#f472b6", "#ff1493", "#f472b6"]
+                      }}
+                      transition={{
+                        duration: 1.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.5, 1]
+                      }}
+                      className="inline-block"
+                    >
+                      Because {firstName}, you are my world{" "}
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          rotate: [0, 15, -15, 0]
+                        }}
+                        transition={{
+                          duration: 1.2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          times: [0, 0.5, 1]
+                        }}
+                        className="inline-block"
+                      >
+                        ❤️
+                      </motion.div>
+                    </motion.div>
                   </motion.div>
                   {/* Floating Love Icons */}
                   {[...Array(5)].map((_, i) => (
