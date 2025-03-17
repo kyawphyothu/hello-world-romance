@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 // import { motion, AnimatePresence } from "framer-motion"
-import { motion } from "motion/react"
+import { motion } from 'motion/react'
 
 export default function TerminalPage() {
   const [output, setOutput] = useState<string[]>([])
@@ -18,14 +18,22 @@ export default function TerminalPage() {
 
   useEffect(() => {
     if (audio) {
-      audio.volume = 1
-      audio.playbackRate = 0.95
+      audio.volume = 0.3
+      audio.playbackRate = 0.96
       
       // Set up infinite playback
       audio.addEventListener('ended', () => {
         audio.currentTime = 0
         audio.play()
       })
+    }
+
+    // Cleanup function to stop audio when component unmounts
+    return () => {
+      if (audio) {
+        audio.pause()
+        audio.currentTime = 0
+      }
     }
   }, [audio])
 
@@ -60,6 +68,10 @@ export default function TerminalPage() {
   }
 
   const handleReset = () => {
+    if (audio) {
+      audio.pause()
+      audio.currentTime = 0
+    }
     router.push('/name')
   }
 
