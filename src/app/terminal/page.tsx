@@ -9,10 +9,24 @@ export default function TerminalPage() {
   const [showMessage, setShowMessage] = useState(false)
   const [typedGreeting, setTypedGreeting] = useState('')
   const [hasRun, setHasRun] = useState(false)
+  const [audio] = useState(typeof Audio !== 'undefined' ? new Audio('/heartbeat.mp3') : null)
   const searchParams = useSearchParams()
   const router = useRouter()
   const fullName = searchParams.get('name') || 'User'
   const firstName = fullName.split(' ')[0]
+
+  useEffect(() => {
+    if (audio) {
+      audio.volume = 1
+      audio.playbackRate = 0.95
+      
+      // Set up infinite playback
+      audio.addEventListener('ended', () => {
+        audio.currentTime = 0
+        audio.play()
+      })
+    }
+  }, [audio])
 
   const handleRun = () => {
     if (hasRun) return
@@ -27,7 +41,13 @@ export default function TerminalPage() {
         currentIndex++
       } else {
         clearInterval(interval)
-        setTimeout(() => setShowMessage(true), 1000)
+        setTimeout(() => {
+          setShowMessage(true)
+          if (audio) {
+            audio.currentTime = 0
+            audio.play()
+          }
+        }, 1000)
       }
     }, 100)
   }
