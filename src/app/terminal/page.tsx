@@ -34,9 +34,14 @@ export default function TerminalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-pink-900 p-8">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6 font-mono">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 font-mono border border-pink-500/20"
+        >
           {/* Terminal Header */}
           <div className="flex items-center gap-2 mb-4">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -47,14 +52,28 @@ export default function TerminalPage() {
           {/* Terminal Content */}
           <div className="text-gray-300">
             <div className="mb-4">
-              <span className="text-green-400">➜</span>
+              <span className="text-pink-400">➜</span>
               <span className="text-blue-400"> ~</span>
             </div>
             
             {/* Welcome Message */}
             <div className="mb-4">
-              <div className="text-yellow-400">Welcome to Python Terminal!</div>
-              <div className="text-gray-400">Press Enter or click Run to execute: print("Hello World")</div>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="text-pink-400 text-lg"
+              >
+                Welcome to the Love Terminal ❤️
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-gray-400"
+              >
+                Press Enter or click Run to execute: print("Hello World")
+              </motion.div>
             </div>
 
             {/* Command Output */}
@@ -117,13 +136,13 @@ export default function TerminalPage() {
             {/* Command Input and Run Button */}
             <div className="flex items-center gap-4">
               <div className="flex-1 flex items-center">
-                <span className="text-green-400 mr-2">&gt;&gt;&gt; </span>
+                <span className="text-pink-400 mr-2">&gt;&gt;&gt; </span>
                 <div className="text-gray-300 flex-1">print("Hello World")</div>
               </div>
               <button
                 onClick={handleRun}
                 onKeyPress={handleKeyPress}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-md border border-gray-600 hover:bg-gray-600 hover:border-gray-500 transition-all duration-200 font-mono text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 hover:bg-gray-600/80 hover:border-pink-500/50 transition-all duration-200 font-mono text-sm"
               >
                 <svg 
                   className="w-4 h-4" 
@@ -148,7 +167,7 @@ export default function TerminalPage() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
