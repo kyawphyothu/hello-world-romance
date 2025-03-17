@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// import { motion } from "framer-motion";
+import * as motion from "motion/react-client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,15 +21,49 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="min-h-dvh bg-gradient-to-b from-gray-900 to-pink-900">
+        <div className="min-h-dvh flex flex-col">
+          <main className="flex-1 p-4 sm:p-8">
+            {children}
+          </main>
+          
+          {/* Footer */}
+          <motion.footer 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="text-center p-4 text-gray-400 text-xs sm:text-sm"
+          >
+            Made with{" "}
+            <motion.span
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0]
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              ❤️
+            </motion.span>{" "}
+            by{" "}
+            <a 
+              href="https://kyawphyothu.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 transition-colors duration-200"
+            >
+              Kyaw Phyo Thu
+            </a>
+          </motion.footer>
+        </div>
       </body>
     </html>
   );
