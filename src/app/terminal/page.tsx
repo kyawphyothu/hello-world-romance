@@ -139,28 +139,28 @@ export default function TerminalPage() {
                 >
                   <motion.div
                     animate={{
-                      scale: [1, 1.1, 1],
-                      color: ["#f472b6", "#ff1493", "#f472b6"]
+                      scale: [1, 1.3, 1.1, 1.2, 1],
+                      color: ["#f472b6", "#ff1493", "#ff1493", "#ff1493", "#f472b6"]
                     }}
                     transition={{
                       duration: 1.2,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      times: [0, 0.5, 1]
+                      times: [0, 0.1, 0.2, 0.3, 1]
                     }}
                     className="inline-block"
                   >
                     Because {firstName}, you are my world{" "}
                     <motion.div
                       animate={{
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 15, -15, 0]
+                        scale: [1, 1.4, 1.2, 1.3, 1],
+                        rotate: [0, 20, -10, 10, 0]
                       }}
                       transition={{
                         duration: 1.2,
                         repeat: Infinity,
                         ease: "easeInOut",
-                        times: [0, 0.5, 1]
+                        times: [0, 0.1, 0.2, 0.3, 1]
                       }}
                       className="inline-block"
                     >
