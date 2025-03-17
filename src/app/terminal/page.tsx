@@ -1,18 +1,30 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from "motion/react"
 
 export default function TerminalPage() {
   const [output, setOutput] = useState<string[]>([])
   const [showMessage, setShowMessage] = useState(false)
+  const [typedGreeting, setTypedGreeting] = useState('')
   const searchParams = useSearchParams()
   const name = searchParams.get('name') || 'User'
 
   const handleRun = () => {
-    setOutput(prev => [...prev, `>>> print("Hello World")`, `Hello ${name}`])
-    setTimeout(() => setShowMessage(true), 1500)
+    setOutput(prev => [...prev, `>>> print("Hello World")`])
+    // Start typewriter effect
+    let currentIndex = 0
+    const greeting = `Hello ${name}`
+    const interval = setInterval(() => {
+      if (currentIndex <= greeting.length) {
+        setTypedGreeting(greeting.slice(0, currentIndex))
+        currentIndex++
+      } else {
+        clearInterval(interval)
+        setTimeout(() => setShowMessage(true), 1000)
+      }
+    }, 100)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -58,15 +70,47 @@ export default function TerminalPage() {
                   {line}
                 </motion.div>
               ))}
-              {showMessage && (
+              {typedGreeting && (
                 <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="text-green-400 italic"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-gray-300"
                 >
-                  (Because you are my world)
+                  {typedGreeting}
                 </motion.div>
+              )}
+              {showMessage && (
+                <div className="relative">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-pink-400 italic text-lg"
+                  >
+                    (Because you are my world)
+                  </motion.div>
+                  {/* Floating Love Icons */}
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 0 }}
+                      animate={{ 
+                        opacity: [0, 1, 0],
+                        y: -50
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        delay: i * 0.2,
+                        repeat: Infinity,
+                        ease: "easeOut"
+                      }}
+                      className="absolute text-pink-400"
+                      style={{ left: `${i * 20}%` }}
+                    >
+                      ❤️
+                    </motion.div>
+                  ))}
+                </div>
               )}
             </div>
             
