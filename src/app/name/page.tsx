@@ -3,6 +3,7 @@
 // import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+// import { motion } from "framer-motion"
 import { motion } from "motion/react"
 
 export default function NamePage() {
@@ -22,22 +23,27 @@ export default function NamePage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg p-4 sm:p-6 font-mono border border-pink-500/20 text-sm sm:text-base"
+        className="bg-gray-800/20 backdrop-blur-md rounded-lg shadow-lg p-4 sm:p-6 font-mono border border-pink-500/30 text-sm sm:text-base relative overflow-hidden"
       >
+        {/* Glass Effect Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
+
         {/* Terminal Header */}
-        <div className="flex items-center gap-2 mb-3 sm:mb-4">
-          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500"></div>
-          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500"></div>
+        <div className="flex items-center justify-between mb-3 sm:mb-4 relative">
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/80 backdrop-blur-sm"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/80 backdrop-blur-sm"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/80 backdrop-blur-sm"></div>
+          </div>
         </div>
-        
+
         {/* Terminal Content */}
-        <div className="text-gray-300">
+        <div className="text-gray-300 relative">
           <div className="mb-3 sm:mb-4">
             <span className="text-pink-400">➜</span>
             <span className="text-blue-400"> ~</span>
           </div>
-          
+
           {/* Welcome Message */}
           <div className="mb-3 sm:mb-4">
             <motion.div 
@@ -54,20 +60,20 @@ export default function NamePage() {
               transition={{ delay: 0.4 }}
               className="text-gray-400 text-xs sm:text-sm"
             >
-              Please enter your name to begin your journey
+              Please enter your name to continue
             </motion.div>
           </div>
 
           {/* Name Input Form */}
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <span className="text-pink-400 text-xs sm:text-sm">&gt;&gt;&gt; </span>
+            <div className="flex items-center gap-2">
+              <span className="text-pink-400">&gt;&gt;&gt;</span>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
-                className="flex-1 bg-transparent border-none outline-none text-gray-300 text-xs sm:text-sm placeholder-gray-500"
+                className="flex-1 bg-transparent border-none outline-none text-gray-300 placeholder-gray-500 text-xs sm:text-sm font-mono"
                 autoFocus
               />
             </div>
@@ -75,8 +81,12 @@ export default function NamePage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 hover:bg-gray-600/80 hover:border-pink-500/50 transition-all duration-200 font-mono text-xs sm:text-sm"
+              disabled={!name.trim()}
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-700/30 text-gray-300 rounded-md border border-pink-500/30 transition-all duration-200 font-mono text-xs sm:text-sm backdrop-blur-sm ${
+                !name.trim() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-600/40 hover:border-pink-500/50'
+              }`}
             >
+              Continue
               <svg 
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4" 
                 fill="none" 
@@ -87,10 +97,9 @@ export default function NamePage() {
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   strokeWidth={2} 
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  d="M9 5l7 7-7 7"
                 />
               </svg>
-              Continue
             </motion.button>
           </form>
         </div>
