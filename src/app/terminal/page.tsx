@@ -10,13 +10,14 @@ export default function TerminalPage() {
   const [typedGreeting, setTypedGreeting] = useState('')
   const searchParams = useSearchParams()
   const router = useRouter()
-  const name = searchParams.get('name') || 'User'
+  const fullName = searchParams.get('name') || 'User'
+  const firstName = fullName.split(' ')[0]
 
   const handleRun = () => {
     setOutput(prev => [...prev, `>>> print("Hello World")`])
     // Start typewriter effect
     let currentIndex = 0
-    const greeting = `Hello ${name}`
+    const greeting = `Hello ${fullName}`
     const interval = setInterval(() => {
       if (currentIndex <= greeting.length) {
         setTypedGreeting(greeting.slice(0, currentIndex))
@@ -134,7 +135,7 @@ export default function TerminalPage() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="text-pink-400 italic text-lg"
                   >
-                    (Because you are my world)
+                    Because {firstName}, you are my world ❤️
                   </motion.div>
                   {/* Floating Love Icons */}
                   {[...Array(5)].map((_, i) => (
