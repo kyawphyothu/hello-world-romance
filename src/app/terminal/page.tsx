@@ -163,7 +163,7 @@ function TerminalContent() {
                 animate={{ opacity: 1 }}
                 className="text-gray-300"
               >
-                {typedGreeting}
+                Hello <span className="line-through">World</span> {fullName}
               </motion.div>
             )}
             {showMessage && (
