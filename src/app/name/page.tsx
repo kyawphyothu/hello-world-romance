@@ -75,7 +75,7 @@ export default function NamePage() {
             </form>
 
             {/* Floating Hearts */}
-            {[...Array(3)].map((_, i) => (
+            {/* {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 0 }}
@@ -94,7 +94,7 @@ export default function NamePage() {
               >
                 ❤️
               </motion.div>
-            ))}
+            ))} */}
           </div>
         </motion.div>
       </div>

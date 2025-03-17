@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from "motion/react"
 
 export default function TerminalPage() {
@@ -9,6 +9,7 @@ export default function TerminalPage() {
   const [showMessage, setShowMessage] = useState(false)
   const [typedGreeting, setTypedGreeting] = useState('')
   const searchParams = useSearchParams()
+  const router = useRouter()
   const name = searchParams.get('name') || 'User'
 
   const handleRun = () => {
@@ -33,6 +34,10 @@ export default function TerminalPage() {
     }
   }
 
+  const handleReset = () => {
+    router.push('/name')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-pink-900 p-8">
       <div className="max-w-3xl mx-auto">
@@ -43,10 +48,33 @@ export default function TerminalPage() {
           className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg p-6 font-mono border border-pink-500/20"
         >
           {/* Terminal Header */}
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleReset}
+              className="flex items-center gap-2 px-3 py-1 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 hover:bg-gray-600/80 hover:border-pink-500/50 transition-all duration-200 font-mono text-sm"
+            >
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+              Reset
+            </motion.button>
           </div>
           
           {/* Terminal Content */}
@@ -72,7 +100,7 @@ export default function TerminalPage() {
                 transition={{ delay: 0.4 }}
                 className="text-gray-400"
               >
-                Press Enter or click Run to execute: print("Hello World")
+                Click Run to print "Hello World"
               </motion.div>
             </div>
 
@@ -139,7 +167,9 @@ export default function TerminalPage() {
                 <span className="text-pink-400 mr-2">&gt;&gt;&gt; </span>
                 <div className="text-gray-300 flex-1">print("Hello World")</div>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleRun}
                 onKeyPress={handleKeyPress}
                 className="flex items-center gap-2 px-4 py-2 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 hover:bg-gray-600/80 hover:border-pink-500/50 transition-all duration-200 font-mono text-sm"
@@ -164,7 +194,7 @@ export default function TerminalPage() {
                   />
                 </svg>
                 Run
-              </button>
+              </motion.button>
             </div>
           </div>
         </motion.div>
