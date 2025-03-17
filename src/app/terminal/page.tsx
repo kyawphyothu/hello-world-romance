@@ -8,12 +8,15 @@ export default function TerminalPage() {
   const [output, setOutput] = useState<string[]>([])
   const [showMessage, setShowMessage] = useState(false)
   const [typedGreeting, setTypedGreeting] = useState('')
+  const [hasRun, setHasRun] = useState(false)
   const searchParams = useSearchParams()
   const router = useRouter()
   const fullName = searchParams.get('name') || 'User'
   const firstName = fullName.split(' ')[0]
 
   const handleRun = () => {
+    if (hasRun) return
+    setHasRun(true)
     setOutput(prev => [...prev, `>>> print("Hello World")`])
     // Start typewriter effect
     let currentIndex = 0
@@ -30,7 +33,7 @@ export default function TerminalPage() {
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !hasRun) {
       handleRun()
     }
   }
@@ -101,7 +104,7 @@ export default function TerminalPage() {
                 transition={{ delay: 0.4 }}
                 className="text-gray-400 text-xs sm:text-sm"
               >
-                Click Run to print "Hello World"
+                {!hasRun ? 'Click Run to print "Hello World"' : 'Program completed. Click Reset to start over.'}
               </motion.div>
             </div>
 
@@ -202,7 +205,10 @@ export default function TerminalPage() {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleRun}
                 onKeyPress={handleKeyPress}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 hover:bg-gray-600/80 hover:border-pink-500/50 transition-all duration-200 font-mono text-xs sm:text-sm"
+                disabled={hasRun}
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-700/80 text-gray-300 rounded-md border border-pink-500/30 transition-all duration-200 font-mono text-xs sm:text-sm ${
+                  hasRun ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-600/80 hover:border-pink-500/50'
+                }`}
               >
                 <svg 
                   className="w-3.5 h-3.5 sm:w-4 sm:h-4" 
@@ -223,7 +229,7 @@ export default function TerminalPage() {
                     d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                Run
+                {hasRun ? 'Completed' : 'Run'}
               </motion.button>
             </div>
           </div>
