@@ -19,7 +19,7 @@ function TerminalContent() {
 
   useEffect(() => {
     if (audio) {
-      audio.volume = 0.3
+      audio.volume = 1
       audio.playbackRate = 0.96
       
       // Set up infinite playback
