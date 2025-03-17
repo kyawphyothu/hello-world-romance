@@ -43,7 +43,7 @@ export default function TerminalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-pink-900 p-4 sm:p-8">
+    <div className="min-h-dvh bg-gradient-to-b from-gray-900 to-pink-900 p-4 sm:p-8">
       <div className="max-w-3xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
