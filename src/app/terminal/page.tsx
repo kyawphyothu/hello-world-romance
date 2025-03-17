@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 // import { motion, AnimatePresence } from "framer-motion"
 import { motion } from 'motion/react'
 
-export default function TerminalPage() {
+// Separate client component for the terminal content
+function TerminalContent() {
   const [output, setOutput] = useState<string[]>([])
   const [showMessage, setShowMessage] = useState(false)
   const [typedGreeting, setTypedGreeting] = useState('')
@@ -270,5 +271,25 @@ export default function TerminalPage() {
         </div>
       </motion.div>
     </div>
+  )
+}
+
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="max-w-3xl mx-auto">
+      <div className="bg-gray-800/20 backdrop-blur-md rounded-lg shadow-lg p-4 sm:p-6 font-mono border border-pink-500/30 text-sm sm:text-base relative overflow-hidden">
+        <div className="text-gray-300 text-center py-8">Loading...</div>
+      </div>
+    </div>
+  )
+}
+
+// Main page component
+export default function TerminalPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <TerminalContent />
+    </Suspense>
   )
 } 
